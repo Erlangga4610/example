@@ -33,8 +33,10 @@ class Create extends Component
      */
     public function store()
     {
-        $this->validate();
+    $this->validate();
 
+    // Cek apakah ada gambar yang diupload
+    if ($this->image) {
         //store image in storage/app/public/posts
         $this->image->storeAs('public/posts', $this->image->hashName());
 
@@ -50,7 +52,12 @@ class Create extends Component
 
         //redirect
         return redirect()->route('posts.index');
+        } else {
+        // Jika tidak ada gambar
+        session()->flash('error', 'Gambar tidak ditemukan.');
     }
+    }
+
 
     /**
      * render
